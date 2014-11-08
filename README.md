@@ -35,5 +35,5 @@
 ####Tricks:
 
 + **Add TimeStamp** to indicate kinds of posts, when user logged in, when user last accessed the system. This will allow the application display new content of interest has become available since the last time the user logged in.  
-+ **Different view for different group**:  `admin` can see all the content, `user` stays in application layer and only see and does within his own rights.  
++ **Different Views for different Groups**:  `admin` can see all the content, `user` stays in application layer and only see and does within his own rights.  
 
