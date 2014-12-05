@@ -4,6 +4,7 @@ Date: Dec 4th, 2014 -->
 
 <!-- PHP and manipulate with livevibe database -->
 <?php
+require ("connectdb.php");
 // Declare variables need to be presented in HTML below
 
 ?>
@@ -26,10 +27,7 @@ Date: Dec 4th, 2014 -->
 <body>
 	<header id="header" role="banner">		
 		<div class="main-nav">
-			<div class="container">
-				<div class="header-top">
-				<!-- deleted social icon -->
-				</div>     
+			<div class="container">  
 		        <div class="row">	        		
 		            <div class="navbar-header">
 		                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -45,9 +43,10 @@ Date: Dec 4th, 2014 -->
 		            <div class="collapse navbar-collapse">
 		                <ul class="nav navbar-nav navbar-right">                 
 		                    <li class="scroll active"><a href="#home">Home</a></li>
-                    		<li class="scroll"><a href="#event">Trend</a></li>
+                    		<li class="scroll"><a href="#trend">Trend</a></li>
                     		<li class="scroll"><a href="#genre">Genre</a></li>
 		                    <li class="scroll"><a href="#about">About</a></li>
+		                    <li class="scroll"><a href="#register">Register</a></li>
 							<li class="scroll"><a href="#login">Login</a></li>       
 		                </ul>
 		            </div>
@@ -94,78 +93,13 @@ Date: Dec 4th, 2014 -->
     </section>
 	<!--/#home-->
 
-	<section id="event">
-		<div class="container">
-			<div class="row">
-				<div class="col-sm-12 col-md-9">
-					<div id="event-carousel" class="carousel slide" data-interval="false">
-						<h2 class="heading">THE ROCKING Performers</h2>
-						<a class="even-control-left" href="#event-carousel" data-slide="prev"><i class="fa fa-angle-left"></i></a>
-						<a class="even-control-right" href="#event-carousel" data-slide="next"><i class="fa fa-angle-right"></i></a>
-						<div class="carousel-inner">
-							<div class="item active">
-								<div class="row">
-									<div class="col-sm-4">
-										<div class="single-event">
-											<img class="img-responsive" src="images/event/event1.jpg" alt="event-image">
-											<h4>Chester Bennington</h4>
-											<h5>Vocal</h5>
-										</div>
-									</div>
-									<div class="col-sm-4">
-										<div class="single-event">
-											<img class="img-responsive" src="images/event/event2.jpg" alt="event-image">
-											<h4>Mike Shinoda</h4>
-											<h5>vocals, rhythm guitar</h5>
-										</div>
-									</div>
-									<div class="col-sm-4">
-										<div class="single-event">
-											<img class="img-responsive" src="images/event/event3.jpg" alt="event-image">
-											<h4>Rob Bourdon</h4>
-											<h5>drums</h5>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="item">
-								<div class="row">
-									<div class="col-sm-4">
-										<div class="single-event">
-											<img class="img-responsive" src="images/event/event1.jpg" alt="event-image">
-											<h4>Chester Bennington</h4>
-											<h5>Vocal</h5>
-										</div>
-									</div>
-									<div class="col-sm-4">
-										<div class="single-event">
-											<img class="img-responsive" src="images/event/event2.jpg" alt="event-image">
-											<h4>Mike Shinoda</h4>
-											<h5>vocals, rhythm guitar</h5>
-										</div>
-									</div>
-									<div class="col-sm-4">
-										<div class="single-event">
-											<img class="img-responsive" src="images/event/event3.jpg" alt="event-image">
-											<h4>Rob Bourdon</h4>
-											<h5>drums</h5>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="guitar">
-					<img class="img-responsive" src="images/guitar.png" alt="guitar">
+	<section id="trend">end">
 				</div>
 			</div>			
 		</div>
-	</section><!--/#event-->
+	</section><!--/#trend-->
 
-	<section id="genre">
-		<div class="genre-section">
-			<div class="container">
+	<section id="genre">ner">
 					<div class="col-sm-5">
 						
 					</div>
@@ -176,26 +110,25 @@ Date: Dec 4th, 2014 -->
 
 	<section id="about">
 		<div class="guitar2">				
-			<img class="img-responsive" src="images/guitar2.jpg" alt="guitar">
+			<img class="img-responsive" src="image/guitar2.jpg" alt="guitar">
 		</div>
-		<div class="about-content">					
-					<h2>About LiveVibe</h2>
-					<p>We believe that an amazing concert can change your life. We built LiveVibe so we’d have one place to track our favorite bands so we’d never miss them live. We want to take the hassle out of finding out when your favorite bands are coming to your city. LiveVibe works by indexing many different ticket vendors, venue websites, and local newspapers to create the most comprehensive database of upcoming concerts happening around the world. It’s our mission to have every show happening anywhere, from your friend’s show at your local bar, right up to Lady Gaga tour dates in Tokyo.</p>	
+		<div class="aboutconent">					
+				<h2>About LiveVibe</h2>
+					<p>We believe that an amazing concert can change your life. We built LiveVibe so we’d have one place to track our favorite bands so we’d nevr miss them live. We want to take the hassle out of findng ut when your fvorite bands are coming to your city. LiveVibe works by indexing many different ticket vendors, venue websites, and local newspapers to create the most comprehensive database of upoming concerts happening around the world. It’s our misson o have every sow happening anywhere, from your friend’s show at your local bar, right up to Lady Gaga tour dates in Tokyo.</p>	
 		</div>
 	</section><!--/#about-->
 
     <footer id="footer">
         <div class="container">
-            <div class="text-center">
-                <p> Copyright &copy; 2014<a href="https://github.com/CS6083-DB-Project" target="_blank"> LiveVibe </a> <br> Designed by <a href="https://github.com/xun-gong" target="_blank">Xun Gong</a> + <a href="https://github.com/monofish" target="_blank">Wei Yu</a> </p>               
-            </div>
-        </div>
+            <div class="text-center">                <p> Copyright &copy; 2014<a href="https:/gihub.com/CS6083DB-Project" target="_blank"> LiveVibe </a> <br> Designed by <a href="https://github.com/xun-gong" target="_blank">Xun Gong</a> + <a href="https://github.com/monofish" taret="_blank">Wei Yu</a> </p>               
+            <div
+        </div
     </footer>
     <!--/#footer-->
   
     <script type="text/javascript" src="js/jquery.js"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+	<scrip type="text/javascript" src="http://maps.google.com/mapsapijs?sensor=true"></script>
   	<script type="text/javascript" src="js/gmaps.js"></script>
 	<script type="text/javascript" src="js/smoothscroll.js"></script>
     <script type="text/javascript" src="js/jquery.parallax.js"></script>

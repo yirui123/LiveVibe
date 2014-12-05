@@ -1,13 +1,11 @@
-@import url(http://fonts.googleapis.com/css?family=Dosis:400,200,300,500,600,700,800);
-@import url(http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:400,300,200,700);
-
+@import url(http://fonts.googleapis.com/css?family=Slabo+27px);
 
 /*************************
 *******Typography******
 **************************/
 
 body {
-  font-family: 'Dosis', sans-serif;
+  font-family: 'Slabo 27px', serif;
   font-size: 20px;
   color: #fff
 }
@@ -15,16 +13,16 @@ body {
 
 .btn {
   border-radius: 0;
-  font-family: 'Yanone Kaffeesatz','sans-serif';
+  font-family: 'Slabo 27px', serif;
   font-size: 20px;
   padding: 9px 23px;
 }
 
 a {
-  -webkit-transition: 500ms;
-  -moz-transition: 500ms;
-  -o-transition: 500ms;
-  transition: 500ms;
+  -webkit-transition: 200ms;
+  -moz-transition: 200ms;
+  -o-transition: 200ms;
+  transition: 200ms;
 }
 
 a:focus, 
@@ -34,7 +32,7 @@ a:hover {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Yanone Kaffeesatz', 'sans-serif';
+  font-family: 'Slabo 27px', serif;
   font-weight: 300;
   text-transform: uppercase;
 }
@@ -65,11 +63,11 @@ h2 {
 .header-top {
   display: block;
   overflow: hidden;
-  padding: 25px;
+  padding: 0px;
 }
 
 .main-nav {
-  position: absolute;
+  position: fixed;
   width: 100%;
   z-index: 999;
 }
@@ -79,55 +77,33 @@ h2 {
   width: 100%
 }
 
-.social-icons a {
-  font-size: 18px;
-  color: #fff;
-  padding-left:20px;  
-}
-
-.social-icons .fa-facebook:hover {
-  color: #3B5997
-}
-
-.social-icons .fa-twitter:hover {
-  color:#29C5F6
-}
-
-.social-icons .fa-google-plus:hover {
-  color:#D13D2F
-}
-
-.social-icons .fa-youtube:hover{
-  color: #ec5538
-}
-
 .navbar-brand {
-  background-color: #1B7B98;
+  background-color: #A30000;
   height: 90px;
   margin-bottom: 20px;
   position: relative;
-  width: 297px;
+  width: 300px;
+/*  opacity: .8*/
 }
 
 .navbar-brand img {
   position: absolute;
   top: 15px;
-  left: 35px;
+  left: 30px;
 }
 
 .navbar-right {
-  background-color: #1B7B98;
-  padding:0 95px 0 0;
-  opacity: .9
+  background-color: #A30000;
+  padding:0 20px 0 0;
+/*  opacity: .8*/
 }
 
 .navbar-right li a {
   padding: 35px 21px;
-  font-size: 22px;
+  font-size: 27px;
   color: #fff;
   text-transform: uppercase;
-  font-family: 'Yanone Kaffeesatz', 'sans-serif';
-  font-weight: 300;
+  font-family: 'Slabo 27px', serif;
 }
 
 .navbar-right li a:hover, 
@@ -139,7 +115,7 @@ h2 {
 
 
 .fixed-menu {
-  background-color: #1B7B98;
+  background-color: #A30000;
   position: fixed;
   top: 0;
 }
@@ -187,25 +163,33 @@ h2 {
   width: 100%
 }
 
+#main-slider
+.carousel-inner{
+  width:100%;
+  max-height: 900px !important;
+}
+
 #main-slider 
 .carousel-caption {
   background: none repeat scroll 0 0 #000000;
-  bottom: 14%;
+  bottom: 10%;
   float: left;
   left: 0;
   opacity: 0.8;
-  padding:10px 60px 35px;
+  padding:10px 10px 35px;
   right: inherit;
   text-transform: uppercase;
   color: #fff;
-  text-align: left;
 }
 
+#main-slider 
+.carousel-caption {  
+  font-size: 38px;
+}
 
 #main-slider 
 .carousel-caption h2 {  
   font-size: 38px;
- 
 }
 
 #main-slider 
@@ -241,8 +225,8 @@ h2 {
 
 #main-slider 
 .carousel-indicators li {
-  background-color:#1B7B98;
-  border: 1px solid #1B7B98;
+  background-color:#A30000;
+  border: 1px solid #A30000;
 }
 
 #main-slider 
@@ -390,9 +374,9 @@ h2 {
  
 
  /*************************
-*******Event CSS******
+*******trend CSS******
 **************************/
-#event {
+#trend {
   background-color: #33888F;
   background-image: url("../images/performar-bg.jpg");
   background-position: 50% 0;
@@ -408,7 +392,7 @@ h2 {
 }
 
 
-#event h2 {
+#trend h2 {
   color: #FFFFFF;
   font-size: 36px;
   font-weight: 300;
@@ -417,11 +401,11 @@ h2 {
   text-transform: uppercase;
 }
 
-.single-event {
+.single-trend {
   margin-bottom: 70px;
 }
 
-.single-event h4 {
+.single-trend h4 {
   color: #FFFFFF;
   font-size: 24px;
   font-weight: 300;
@@ -431,13 +415,13 @@ h2 {
 }
 
 
-.single-event h5 {
+.single-trend h5 {
   font-size: 18px;
   font-weight: 100;
   display: block;
 }
 
-#event-carousel {
+#trend-carousel {
   position: relative;
 }
 
@@ -664,6 +648,7 @@ h2 {
   background-size:contain;
   background-repeat:no-repeat;  
   position: relative;
+  height: 400px;
 }
 
 .ear-piece {
@@ -755,7 +740,7 @@ h2 {
 }
 
 #footer a:hover {
-  color:#1B7B98
+  color:#A30000
 }
 
 
