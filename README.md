@@ -1,7 +1,7 @@
 #LiveVibe
 
 
-####LiveVibe will be implemented with Ruby on Rails, utilizing Twitter Bootstrap framework.  
+####LiveVibe will be implemented with PHP, utilizing Twitter Bootstrap framework.  
 
 > LiveVibe is a mock online community for fans of live music. Our goal is to build an online service that offer information about bands and concerts. Fans can follow their favorite bands and head to upcoming concerts. Our service also incorporate a simple recommendation system and search mechanisms.  
 
