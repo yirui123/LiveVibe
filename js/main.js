@@ -37,12 +37,12 @@ jQuery(function($) {'use strict',
 	});
 
 
-	// Contact form validation
-	var form = $('.contact-form');
+	// genre form validation
+	var form = $('.genre-form');
 	form.submit(function () {'use strict',
 		$this = $(this);
 		$.post($(this).attr('action'), function(data) {
-			$this.prev().text(data.message).fadeIn().delay(3000).fadeOut();
+			$this.prev().text(data.message).fadeIn().delay(2000).fadeOut();
 		},'json');
 		return false;
 	});
