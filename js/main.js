@@ -1,10 +1,5 @@
 jQuery(function($) {'use strict',
 	
-	//Countdown js
-	 $("#countdown").countdown({
-			date: "10 july 2014 12:00:00",
-			format: "on"
-		},
 		
 		function() {
 			// callback function
@@ -75,11 +70,11 @@ jQuery(function($) {'use strict',
 
 	map = new GMaps({
 		el: '#gmap',
-		lat: 43.04446,
-		lng: -76.130791,
+		lat: 40.7903,
+		lng: 73.9597,
 		scrollwheel:false,
-		zoom: 16,
-		zoomControl : false,
+		zoom: 20,
+		zoomControl : true,
 		panControl : false,
 		streetViewControl : false,
 		mapTypeControl: false,
@@ -89,8 +84,8 @@ jQuery(function($) {'use strict',
 
 	var image = 'images/map-icon.png';
 	map.addMarker({
-		lat: 43.04446,
-		lng: -76.130791,
+		lat: 40.7903,
+		lng: 73.9597,
 		icon: image,
 		animation: google.maps.Animation.DROP,
 		verticalAlign: 'bottom',
