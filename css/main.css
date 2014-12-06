@@ -1,4 +1,4 @@
-@import url(http://fonts.googleapis.com/css?family=Slabo+27px);
+ @import url(http://fonts.googleapis.com/css?family=Slabo+27px);
 
 /*************************
 *******Typography******
@@ -79,11 +79,11 @@ h2 {
 
 .navbar-brand {
   background-color: #A30000;
-  height: 90px;
+  height: 80px;
   margin-bottom: 20px;
   position: relative;
-  width: 300px;
-/*  opacity: .8*/
+  width: 481px;
+  opacity: .98
 }
 
 .navbar-brand img {
@@ -95,7 +95,8 @@ h2 {
 .navbar-right {
   background-color: #A30000;
   padding:0 20px 0 0;
-/*  opacity: .8*/
+  height: 80px;
+  opacity: .98
 }
 
 .navbar-right li a {
@@ -110,7 +111,81 @@ h2 {
 .navbar-right li a:focus,  
 .navbar-right .active a {
   background-color: #fff;
-  color: #16728f
+  color: #16728f;
+  height: 80px
+}
+
+/* Drop-down Menu*/
+.dropdown-menu {
+    background-clip: padding-box;
+    background-color: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 6px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    display: none;
+    float: left;
+    left: 0;
+    list-style: outside none none;
+    margin: 2px 0 0;
+    min-width: 160px;
+    padding: 5px 0;
+    position: absolute;
+    top: 100%;
+    z-index: 1000;
+}
+
+#header .btn-info {
+    background-color: #A30000;
+    background-repeat: repeat-x;
+    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+    color: #ffffff;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    width: 100px;
+    height: 40px;
+    border-radius: 4px;
+    vertical-align: middle;
+    padding: 0px;
+}
+
+/* Text in Dropdown Menu*/
+textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input {
+    background-color: #ffffff;
+    border: 1px solid #cccccc;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
+}
+
+select, textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input {
+    border-radius: 4px;
+    color: #555555;
+    display: inline-block;
+    font-size: 12px;
+    height: 30px;
+    line-height: 30px;
+    margin-bottom: 10px;
+    padding: 3px 3px;
+    vertical-align: middle;
+}
+
+input, textarea, .uneditable-input {
+    margin-left: 0;
+}
+
+input, textarea, .uneditable-input {
+    width: 206px;
+}  
+
+input, button, select, textarea {
+    font-family: 'Slabo 27px', serif;
+    font-size: 12px
+}
+
+#header form {
+    margin: 0 0 10px;
+    color: #A30000;
+    font-size: 16px;
+    font-style: bold;
+    font-weight: 600 
 }
 
 
@@ -157,16 +232,20 @@ h2 {
 #home {
   position: relative;
   overflow: hidden;
+  padding-top: 80px;
+  background-color: #A30000
 }
 
 #main-slider img {
-  width: 100%
+  /*width: 100%;*/
+  margin-right: auto;
+  margin-left: auto
 }
 
 #main-slider
 .carousel-inner{
   width:100%;
-  max-height: 900px !important;
+  max-height: 620px !important;
 }
 
 #main-slider 
@@ -262,116 +341,6 @@ h2 {
   text-align: center;
 }
 
-#countdown {
-  display: block;
-  overflow: hidden;
-  text-align: center;
-  padding: 0
-}
-
-#countdown li {
-  list-style: none;
-  display:inline-block;
-  margin-right: 40px;
-  text-align: center;
-  text-transform: uppercase;
-  font-size: 18px;
-  position: relative;
-}
-
-#countdown li:last-child {
-  margin-right: 0
-}
-
-#countdown li span {
-  display: block;
-  font-size: 40px;
-  font-weight: 700;
-  height: 82px;
-  line-height: 79px;
-  width: 75px;
-  border-radius: 10px;
-  border-right: 1px solid #9e3e2e;
-  border-bottom: 1px solid #9e3e2e;
-}
-
-#countdown li .days {
-  background-color: #45b29d;
-  border-top: 1px solid #6ac1b1;
-  border-left: 1px solid #6ac1b1;
-}
-
-#countdown li .hours {
-  background-color: #efc94c; 
-  border-top: 1px solid #f2d470;
-  border-left: 1px solid #f2d470;
-}
-
-#countdown li .minutes {
-  background-color: #e27a3f;
-  border-top: 1px solid #e89565;
-  border-left: 1px solid #e89565;
-}
-
-#countdown li .seconds {
-  background-color: #df5a49;
-  border-top: 1px solid #e57b6d;
-  border-left: 1px solid #e57b6d;
-}
-
-#countdown li:before {
-  background-color: #FFFFFF;
-  content: "";
-  height: 11px;
-  left: 0;
-  position: absolute;
-  top: 36px;
-  width: 1px;
-}
-
-#countdown li:after {
-  background-color: #FFFFFF;
-  content: "";
-  height: 11px;
-  right:0;
-  position: absolute;
-  top: 36px;
-  width: 1px;
-}
-
-.cart {
-  background-color: #b34534;  
-  position: absolute;
-  right:-200px;
-  top: 37%;
-  width:252px;
-   -webkit-transition: all 0.7s ease-in-out;
-  -moz-transition: all 0.7s ease-in-out;
-  -ms-transition: all 0.7s ease-in-out;
-  -o-transition: all 0.7s ease-in-out;
-  transition: all 0.7s ease-in-out;
-}
-
-.cart:hover {
-  right:0;
-}
-
-
-.cart a {
-  color: #FFFFFF;
-  display: block;
-  font-size: 24px;
-  text-transform: uppercase;
-}
-
-.cart a i {
-  font-size: 30px;  
-  padding: 20px 12px;
-  background-color: #A64030; 
-  margin-right: 3px;
-}
-
- 
 
  /*************************
 *******trend CSS******
@@ -492,74 +461,6 @@ h2 {
 #about .btn-primary:hover {
   background-color: #126d55
 }
-
-
-
-/*************************
-******Twitter CSS****
-**************************/
-
-#twitter {
-  background-color: #ecedef;
-  background-image: url("../images/twitter-bg.jpg");
-  background-position: center bottom;
-  background-size: cover;
-  background-repeat:no-repeat;
-  position: relative;
-  padding: 95px 0 90px;
-  overflow: hidden;
-}
-
-.twit {
-  position: absolute;
-  left: 0;
-  top:-42%;
-}
-
-#twitter-feed .item {
-  text-align: center;
-}
-
-#twitter-feed .item img {
-  display: inline-block;
-  width: 78px;
-  height: 78px;
-  border-radius: 50%;
-  background-color: #c5c8ce;
-  padding: 5px;
-  margin-bottom: 30px;
-}
-
-#twitter-feed .item a, 
-#twitter-feed .item p { 
-  font-size: 24px;
-  font-weight: 300;
-  font-family: 'Yanone Kaffeesatz','sans-serif';
-}
-
-#twitter-feed .item p {
-  color: #3D3D3D;
-}
-
-#twitter-feed .item a {
-  color:#00c3ff;
-}
-
-.twitter-control-left, 
-.twitter-control-right {
-  position: absolute;
-  color: #00c3ff;
-  top: 59%;
-  font-size: 24px
-}
-
-.twitter-control-left {
-  left: 0;
-}
-
-.twitter-control-right {
-  right:0;
-} 
 
 
 
