@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Dec 08, 2014 at 04:25 AM
+-- Generation Time: Dec 08, 2014 at 09:03 AM
 -- Server version: 5.5.38
 -- PHP Version: 5.6.2
 
@@ -18,6 +18,13 @@ DELIMITER $$
 --
 -- Procedures
 --
+CREATE DEFINER=`root`@`localhost` PROCEDURE `artist_insert`(IN `aname` VARCHAR(30), IN `apwd` VARCHAR(20), IN `b` VARCHAR(300), IN `rt` DATETIME)
+    NO SQL
+BEGIN
+    INSERT INTO artists
+    SET artistname=aname, artpwd=apwd, bio = b, reg_time=rt, login_time=rt, lastaccess=rt;
+END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `check_id`(IN `submitted_name` VARCHAR(20))
 BEGIN
   CALL check_id_sub(submitted_name, @type);
@@ -98,6 +105,15 @@ BEGIN
     UPDATE artists SET login_time = loginT
       WHERE artistname = submit_name;
     END IF;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `uprofile_insert`(IN `uname` VARCHAR(20), IN `pwd` VARCHAR(20), IN `realn` VARCHAR(30), IN `bir` DATETIME, IN `ct` VARCHAR(20), IN `st` VARCHAR(20), IN `zip` CHAR(5), IN `rt` DATETIME)
+    NO SQL
+BEGIN
+    INSERT INTO users
+    SET username=uname, userpwd=pwd, reg_time=rt, login_time=rt, lastaccess=rt;
+    INSERT INTO uprofile
+    SET username=uname, realname = realn, birth=bir, city=ct, state=st, zipcode=zip;
 END$$
 
 DELIMITER ;
@@ -344,7 +360,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`username`, `userpwd`, `reg_time`, `login_time`, `lastaccess`) VALUES
-('johndoe', 'abc123', '2011-05-12 13:44:34', '2014-12-07 22:21:43', '2014-12-07 22:21:43'),
+('johndoe', 'abc123', '2011-05-12 13:44:34', '2014-12-07 23:21:23', '2014-12-08 00:27:08'),
 ('magicmike', 'abc123', '2014-01-04 12:34:34', '2014-11-23 13:22:48', '2014-11-25 16:42:53'),
 ('mchotdog', 'abc123', '2008-09-23 23:44:34', '2014-11-25 06:22:48', '2014-11-25 14:12:13');
 
