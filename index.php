@@ -1,92 +1,21 @@
 <!-- Project: LiveVibe
 Author: Xun Gong, Wei Yu
 Date: Dec 4th, 2014 -->
-
-<!-- PHP and manipulate with livevibe database -->
 <?php
-// Session start in connectdb.php file
-require ("connectdb.php");
-
-// Check if form pass nothing to this page
-if (isset($_POST["username"]) && isset($_POST["password"])) {
-    // Set local variables
-    $submit_username = $_POST["username"];
-    $submit_pwd = $_POST["password"];
-    // Login status
-    $user_exist = false;
-    $password_valid = false;
-    // Define prepared statements
-    $stmtUsr = $mysqli->prepare("CALL check_id(?)");
-    $stmtPwd = $mysqli->prepare("CALL check_pwd(?, ?)");
-    // Bind parameters
-    $stmtUsr->bind_param('s', $submit_username);
-    $stmtPwd->bind_param('ss', $submit_username, $submit_pwd);
-    // Execute SQL and bind to result
-    if (!$stmtUsr->execute()) {
-        echo "execute failed";
-    }
-    if (!$stmtUsr->store_result()) {
-        echo "store_result failed";
-    }
-    if ($stmtUsr->num_rows) {
-        // Username existed
-        $user_exist = true;
-    }
-    $stmtUsr->free_result();
-    $stmtUsr->closed;
-
-    /* Everytime we would like to call another sp */
-    $mysqli->next_result();
-
-    // Check password
-    if ($user_exist) {
-        if (!$stmtPwd->execute()) {
-            echo "execute failed";
-        }
-        if (!$stmtPwd->store_result()) {
-            echo "store_result failed";
-        }
-        if ($stmtPwd->num_rows) {
-            $password_valid = true;
-        }
-    }
-    else {
-        // Username not exist
-        echo "<html>\n";
-        echo "<script>alert(\"Username Not Exist !\")</script>";
-        echo "</html>";
-        header("refresh:0; http://localhost:8888/livevibe/index.php");
-        die();      
-    }
-
-    if ($user_exist && $password_valid) {
-        // Success logged in
-        $_SESSION["username"] = $submit_username;
-        echo "<html>";
-        echo "<script>";
-        echo "window.location = \'http://localhost:8888/livevibe/profile.php\'";
-        echo "</script>";
-        echo "</html>";
-        // header("Location: profile.php");
-        // die();
-    }
-    else {
-        echo "<html>\n";
-        echo "<script>alert(\"Wrong Password!\")</script>";
-        echo "</html>";
-        header("refresh:0; http://localhost:8888/livevibe/index.php");
-    }
+if (isset($_SESSION["username"])) {
+    // Update lastaccesstime when page load
+    $stmtLAT = $mysqli->prepare("CALL update_LAT(?,?,?)");
+    $submit_username = $_SESSION["username"];
+    $LAT = date("Y-m-d H:i:s");
+    $login_type = $_SESSION["login_type"];
+    $stmtLAT->bind_param('sss', $submit_username, $LAT, $login_type);
+    $stmtLAT->execute();
+    $stmtLAT->free_result();
+    $stmtLAT->closed();
+    redirect('http://localhost:8888/livevibe/profile.php')
+    exit();
 }
-else {
-    echo "<html>\n";
-    echo "<script>alert(\"Username and Password Required !\")</script>";
-    echo "</html>";
-    header("refresh:0; http://localhost:8888/livevibe/index.php");
-}
-
-
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -128,7 +57,7 @@ else {
                             <li class="dropdown">
                                 <a class="dropdown-toggle" href="#" data-toggle="dropdown">Log In <strong class="caret"></strong></a>
                                 <div class="dropdown-menu" style="padding: 20px; padding-bottom: 0px;">
-                                    <form action="index.php" method="post"> 
+                                    <form action="login_controller.php" method="post"> 
                                         Username:
                                         <br /> 
                                         <input type="text" name="username" value="" /> 
