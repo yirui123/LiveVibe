@@ -6,11 +6,24 @@ Date: Dec 4th, 2014 -->
 <?php
 // Session start in connectdb.php file
 require ("connectdb.php");
-// echo "This is Register page.";
 
-// if (isset($_SESSION["username"]){
-
-// }
+if (isset($_SESSION["username"])) {
+    // Update lastaccesstime when page load
+    $stmtLAT = $mysqli->prepare("CALL update_LAT(?,?,?)");
+    $submit_username = $_SESSION["username"];
+    $LAT = date("Y-m-d H:i:s");
+    $login_type = $_SESSION["login_type"];
+    $stmtLAT->bind_param('sss', $submit_username, $LAT, $login_type);
+    $stmtLAT->execute();
+    // Redirect to different page
+    if ($login_type == "user") {
+        redirect('http://localhost:8888/livevibe/user_profile.php');
+    }
+    if ($login_type == "artist") {
+        redirect('http://localhost:8888/livevibe/artist_profile.php');
+    }
+    exit();
+}
 ?>
 
 <!DOCTYPE html>
@@ -128,8 +141,18 @@ require ("connectdb.php");
         </div>
 
         <style>
-        #container1 {
-            
+        body {
+            background-image: url("./images/bg/register_bg.png");
+            background-color: #A30000;
+        }
+
+        .navbar-brand {
+          background-color: #A30000;
+          height: 80px;
+          margin-bottom: 20px;
+          position: relative;
+          width: 768px;
+          opacity: .95
         }
 
         .centered-form {
@@ -148,7 +171,6 @@ require ("connectdb.php");
         }
         </style>      
     </section>
-    <!--/#usrprof-->
 
 
     <script type="text/javascript" src="js/jquery.js"></script>

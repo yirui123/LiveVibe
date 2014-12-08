@@ -5,7 +5,7 @@ Date: Dec 4th, 2014 -->
 <!-- PHP and manipulate with livevibe database -->
 <?php
 require ("connectdb.php");
-
+// Update lastaccess time
 if (isset($_SESSION["username"])) {
     // Update lastaccesstime when page load
     $stmtLAT = $mysqli->prepare("CALL update_LAT(?,?,?)");
@@ -14,7 +14,48 @@ if (isset($_SESSION["username"])) {
     $login_type = $_SESSION["login_type"];
     $stmtLAT->bind_param('sss', $submit_username, $LAT, $login_type);
     $stmtLAT->execute();
+    // $stmtLAT->free_result();
+    // $stmtLAT->close();
+    $mysqli->next_result();
+    // Grab user date to perform user information
+    // Set local var
+    $username = $_SESSION["username"];
+    $city_up = NULL;
+    $state_up = NULL;
+    $follower_up = 0;
+    $following_up = 0;
+    $reviews = 0;
+    
+    $query = "CALL up_info($username)";
+    // $stmtUinfo->bind_param('s', $username);
+    // $stmtUinfo->execute();
+    if ($mysqli->multi_query($query)) {
+        echo "cao";
+    }
+    // $stmtUinfo->bind_result($username, $city, $state);
+
+
+    // Fetch 1st result (username, city, state)
+    // while ($stmtUinfo->fetch()) {
+    //     // echo $username;
+    //     $city_up = $city;
+    //     $state_up = $state;
+    // }
+    // $mysqli->next_result();
+    // // Fetch 2nd result 
+    // $stmtUinfo->bind_result($follower);
+    // while ($stmtUinfo->fetch()) {
+    //     // echo $username;
+    //     $follower_up = $follower;
+    // }
+
+
+    // Grab genre select options
 }
+
+
+
+
 ?>
 
 
@@ -29,6 +70,7 @@ if (isset($_SESSION["username"])) {
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/font-awesome.min.css" rel="stylesheet">
     <link href="css/main.css" rel="stylesheet">
+    <link href="css/bootstrap-select.css" rel="stylesheet">
     <link href="css/animate.css" rel="stylesheet">  
     <link href="css/responsive.css" rel="stylesheet">
 </head><!--/head-->
@@ -51,7 +93,7 @@ if (isset($_SESSION["username"])) {
                     </div>
                     <div class="collapse navbar-collapse">
                         <ul class="nav navbar-nav navbar-right">                 
-                            <li class="scroll active"><a href="index.php">Home</a></li>
+                            <li class="scroll"><a href="index.php">Home</a></li>
                             <li class="scroll"><a href="#">Trend</a></li>
                             <li class="scroll"><a href="#">Genre</a></li>
                             <li class="scroll"><a href="#">About</a></li>
@@ -63,59 +105,99 @@ if (isset($_SESSION["username"])) {
         </div>                    
     </header>
     <!--/#header--> 
+<section id="user_panel">
+    <div class="container">
+      <div class="row">
+          <div class="col-md-10">
+          <div class="panel panel-default">
+                <div class="panel-body">
+                  <div class="row">
+                  <div class="col-xs-12 col-sm-4 text-center">
+                        <img src="http://api.randomuser.me/portraits/men/47.jpg" alt="" class="center-block img-circle img-responsive">
+                    </div><!--/col--> 
+                    <div class="col-xs-12 col-sm-8">
+                        <h2><?php echo $username; ?></h2>
+                        <br>
+                        <p><strong><?php echo $city_up.", ".$state_up?></strong></h3>
+                        <p><strong>Taste: </strong>
+                        <!-- use php loop to grab information -->
+                            <span class="label label-info tags">Jazz</span> 
+                            <span class="label label-info tags">Pop</span>
+                            <span class="label label-info tags">Indie Rock</span>
+                            <span class="label label-info tags">Rock</span>
+                        </p>
+                    </div><!--/col-->          
+                    <div class="clearfix"></div>
+                    <div class="col-xs-12 col-sm-4">
+                        <h2><strong> <?php echo $follower_up;?></strong></h2>                    
+                        <p><small>Followers</small></p>
+                        <!-- <button class="btn btn-success btn-block"><span class="fa fa-plus-circle"></span>  </button> -->
+                    </div><!--/col-->
+                    <div class="col-xs-12 col-sm-4">
+                        <h2><strong><?php echo $following_up;?></strong></h2>                    
+                        <p><small>Following</small></p>
+                        <!-- <button class="btn btn-info btn-block"><span class="fa fa-user"></span> View Profile </button> -->
+                    </div><!--/col-->
+                    <div class="col-xs-12 col-sm-4">
+                        <h2><strong><?php echo $reviews;?></strong></h2>                    
+                        <p><small>Reviews</small></p>  
+                    </div><!--/col-->
 
-<div class="container-fluid">
-  <div class="row">
-      <div class="col-md-8 col-xs-10">
-      <div class="panel panel-default">
-            <div class="panel-body">
-              <div class="row">
-              <div class="col-xs-12 col-sm-4 text-center">
-                    <img src="http://api.randomuser.me/portraits/men/1.jpg" alt="" class="center-block img-circle img-responsive">
-                    <ul class="list-inline ratings text-center" title="Ratings">
-                      <li><a href="#"><span class="fa fa-star fa-lg"></span></a></li>
-                      <li><a href="#"><span class="fa fa-star fa-lg"></span></a></li>
-                      <li><a href="#"><span class="fa fa-star fa-lg"></span></a></li>
-                      <li><a href="#"><span class="fa fa-star fa-lg"></span></a></li>
-                      <li><a href="#"><span class="fa fa-star fa-lg"></span></a></li>
-                    </ul>
-                </div><!--/col--> 
-                <div class="col-xs-12 col-sm-8">
-                    <h2>Mike Anamendolla</h2>
-                    <p><strong>About: </strong> Web Designer / UI </p>
-                    <p><strong>Hobbies: </strong> Hanging out with friends, listen to music, reading and learning new things. </p>
-                    <p><strong>Skills: </strong>
-                        <span class="label label-info tags">html5</span> 
-                        <span class="label label-info tags">css3</span>
-                        <span class="label label-info tags">jquery</span>
-                        <span class="label label-info tags">bootstrap3</span>
-                    </p>
-                </div><!--/col-->          
-                <div class="clearfix"></div>
-                <div class="col-xs-12 col-sm-4">
-                    <h2><strong> 20,7K </strong></h2>                    
-                    <p><small>Followers</small></p>
-                    <button class="btn btn-success btn-block"><span class="fa fa-plus-circle"></span> Follow </button>
-                </div><!--/col-->
-                <div class="col-xs-12 col-sm-4">
-                    <h2><strong>245</strong></h2>                    
-                    <p><small>Following</small></p>
-                    <button class="btn btn-info btn-block"><span class="fa fa-user"></span> View Profile </button>
-                </div><!--/col-->
-                <div class="col-xs-12 col-sm-4">
-                    <h2><strong>43</strong></h2>                    
-                    <p><small>Snippets</small></p>
-                    <button type="button" class="btn btn-primary btn-block"><span class="fa fa-gear"></span> Options </button>  
-                </div><!--/col-->
-              </div><!--/row-->
-              </div><!--/panel-body-->
-          </div><!--/panel-->
-    </div><!--/col--> 
-  </div><!--/row--> 
-</div><!--/container--> 
-  
+                    <!-- Add Select Music Genre -->
+                    <div class="col-xs-12 col-md-4">
+                    <form role="form" action="add_genre.php" method="POST">
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-12">
+                                    <select  name="genre" class="selectpicker" data-style="btn-success" >
+                                        <option>Indie Rock</option>
+                                        <option>Alternative Rock</option>
+                                        <option>Pop</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <br>
+                            <button type="submit" class="btn btn-info btn-block"><span class="fa fa-music"></span>Add Genre You Like</button>
+                            </form>
+                    </div>
+
+                  </div><!--/row-->
+                  </div><!--/panel-body-->
+              </div><!--/panel-->
+        </div><!--/col--> 
+      </div><!--/row--> 
+    </div><!--/container--> 
+</section>
+
+        <style>
+        body {
+            background-image: url("./images/bg/register_bg.png");
+            background-color: #A30000;
+        }
+
+        #user_panel {
+            padding-top: 100px;
+            color: #03695E;
+            padding-left: 140px;
+        }
+
+        .navbar-brand {
+          background-color: #A30000;
+          height: 80px;
+          margin-bottom: 20px;
+          position: relative;
+          width: 640px;
+          opacity: .95
+        }
+        .panel  {
+            opacity: 0.9;
+        }
+
+        </style> 
+
+    </section>
     <script type="text/javascript" src="js/jquery.js"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap-select.js"></script>
     <script type="text/javascript" src="js/smoothscroll.js"></script>
     <script type="text/javascript" src="js/jquery.parallax.js"></script>
     <script type="text/javascript" src="js/jquery.scrollTo.js"></script>

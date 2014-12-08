@@ -219,6 +219,16 @@ if (isset($_SESSION["username"])) {
         </div>
     </footer>
     <!--/#footer-->
+    <style>
+    .navbar-brand {
+      background-color: #A30000;
+      height: 80px;
+      margin-bottom: 20px;
+      position: relative;
+      width: 481px;
+      opacity: .95
+    }
+    </style>
   
     <script type="text/javascript" src="js/jquery.js"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
