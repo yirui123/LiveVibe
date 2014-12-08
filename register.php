@@ -5,64 +5,75 @@ Date: Dec 4th, 2014 -->
 <!-- PHP and manipulate with livevibe database -->
 <?php
 // Session start in connectdb.php file
-require ("connectdb.php");
-echo "This is register page.";
+// require ("connectdb.php");
+// echo "This is register page.";
 
-if (isset($_SESSION["username"]){
+// if (isset($_SESSION["username"]){
 
-}
+// }
 ?>
-<!doctype html>
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Bootstrap Tutorial</title>
-    <meta name="description" content="Bootstrap Tab + Fixed Sidebar Tutorial with HTML5 / CSS3 / JavaScript">
-    <meta name="author" content="Untame.net">
-
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
-    <script src="assets/bootstrap.min.js"></script>
-    <link href="assets/bootstrap.min.css" rel="stylesheet" media="screen">
-    <style type="text/css">
-        body { background: url(assets/bglight.png); }
-        .hero-unit { background-color: #fff; }
-        .center { display: block; margin: 0 auto; }
-    </style>
-</head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Xun Gong + Wei Yu">
+    <title>LiveVibe | CS6083 Database Project</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <link href="css/register.css" rel="stylesheet">
+    <link href="css/animate.css" rel="stylesheet">  
+    <link href="css/responsive.css" rel="stylesheet">
+</head><!--/head-->
 
 <body>
+    <header id="header" role="banner">      
+        <div class="register-nav">
+            <div class="container">  
+                <div class="row">                   
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="index.php">
+                            <img class="img-responsive" src="images/logo.png" alt="logo">
+                        </a>                    
+                    </div>
+                    <div class="collapse navbar-collapse">
+                        <ul class="nav navbar-nav navbar-right">                 
+                            <li class="scroll"><a href="index.php">Home</a></li>
+                            <li class="scroll"><a href="#">Trend</a></li>
+                            <li class="scroll"><a href="#">Genre</a></li>
+                            <li class="scroll"><a href="#">About</a></li>
+                            <li class="scroll"><a href="logout.php">Log out</a></li> 
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>                    
+    </header>
+    <!--/#header--> 
 
-<div class="navbar navbar-fixed-top navbar-inverse">
-  <div class="navbar-inner">
-    <div class="container">
-      <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </a>
-      <a class="brand">PHP Signup + Bootstrap Example</a>
-      <div class="nav-collapse">
-        <ul class="nav pull-right">
-          <li><a href="index.php">Return Home</a></li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</div>
+    <section id="usrprof"> 
+        <div>
+        </div>      
+    </section>
+    <!--/#usrprof-->
 
-<div class="container hero-unit">
-    <h1>Register</h1> <br /><br />
-    <form action="register.php" method="post"> 
-        <label>Username:</label> 
-        <input type="text" name="username" value="" /> 
-        <label>Email: <strong style="color:darkred;">*</strong></label> 
-        <input type="text" name="email" value="" /> 
-        <label>Password:</label> 
-        <input type="password" name="password" value="" /> <br /><br />
-        <p style="color:darkred;">* You may enter a false email address if desired. This demo database does not store addresses for purposes outside of this tutorial.</p><br />
-        <input type="submit" class="btn btn-info" value="Register" /> 
-    </form>
-</div>
 
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+    <script type="text/javascript" src="js/gmaps.js"></script>
+    <script type="text/javascript" src="js/smoothscroll.js"></script>
+    <script type="text/javascript" src="js/jquery.parallax.js"></script>
+    <script type="text/javascript" src="js/jquery.scrollTo.js"></script>
+    <script type="text/javascript" src="js/jquery.nav.js"></script>
+    <script type="text/javascript" src="js/register.js"></script>  
 </body>
 </html>

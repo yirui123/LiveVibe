@@ -55,7 +55,7 @@ if (isset($_SESSION["username"])) {
                     </div>
                     <div class="collapse navbar-collapse">
                         <ul class="nav navbar-nav navbar-right">                 
-                            <li class="scroll active"><a href="#home">Home</a></li>
+                            <li class="scroll"><a href="#home">Home</a></li>
                             <li class="scroll"><a href="#trend">Trend</a></li>
                             <li class="scroll"><a href="#genre">Genre</a></li>
                             <li class="scroll"><a href="#about">About</a></li>

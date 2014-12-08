@@ -63,59 +63,11 @@ if (isset($_SESSION["username"])) {
         </div>                    
     </header>
     <!--/#header--> 
-
-<div class="container-fluid">
-  <div class="row">
-      <div class="col-md-8 col-xs-10">
-      <div class="panel panel-default">
-            <div class="panel-body">
-              <div class="row">
-              <div class="col-xs-12 col-sm-4 text-center">
-                    <img src="http://api.randomuser.me/portraits/men/1.jpg" alt="" class="center-block img-circle img-responsive">
-                    <ul class="list-inline ratings text-center" title="Ratings">
-                      <li><a href="#"><span class="fa fa-star fa-lg"></span></a></li>
-                      <li><a href="#"><span class="fa fa-star fa-lg"></span></a></li>
-                      <li><a href="#"><span class="fa fa-star fa-lg"></span></a></li>
-                      <li><a href="#"><span class="fa fa-star fa-lg"></span></a></li>
-                      <li><a href="#"><span class="fa fa-star fa-lg"></span></a></li>
-                    </ul>
-                </div><!--/col--> 
-                <div class="col-xs-12 col-sm-8">
-                    <h2>Mike Anamendolla</h2>
-                    <p><strong>About: </strong> Web Designer / UI </p>
-                    <p><strong>Hobbies: </strong> Hanging out with friends, listen to music, reading and learning new things. </p>
-                    <p><strong>Skills: </strong>
-                        <span class="label label-info tags">html5</span> 
-                        <span class="label label-info tags">css3</span>
-                        <span class="label label-info tags">jquery</span>
-                        <span class="label label-info tags">bootstrap3</span>
-                    </p>
-                </div><!--/col-->          
-                <div class="clearfix"></div>
-                <div class="col-xs-12 col-sm-4">
-                    <h2><strong> 20,7K </strong></h2>                    
-                    <p><small>Followers</small></p>
-                    <button class="btn btn-success btn-block"><span class="fa fa-plus-circle"></span> Follow </button>
-                </div><!--/col-->
-                <div class="col-xs-12 col-sm-4">
-                    <h2><strong>245</strong></h2>                    
-                    <p><small>Following</small></p>
-                    <button class="btn btn-info btn-block"><span class="fa fa-user"></span> View Profile </button>
-                </div><!--/col-->
-                <div class="col-xs-12 col-sm-4">
-                    <h2><strong>43</strong></h2>                    
-                    <p><small>Snippets</small></p>
-                    <button type="button" class="btn btn-primary btn-block"><span class="fa fa-gear"></span> Options </button>  
-                </div><!--/col-->
-              </div><!--/row-->
-              </div><!--/panel-body-->
-          </div><!--/panel-->
-    </div><!--/col--> 
-  </div><!--/row--> 
-</div><!--/container--> 
   
     <script type="text/javascript" src="js/jquery.js"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+    <script type="text/javascript" src="js/gmaps.js"></script>
     <script type="text/javascript" src="js/smoothscroll.js"></script>
     <script type="text/javascript" src="js/jquery.parallax.js"></script>
     <script type="text/javascript" src="js/jquery.scrollTo.js"></script>
