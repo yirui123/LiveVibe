@@ -434,7 +434,7 @@ input, button, select, textarea {
 
 .about-content {
   width: 50%;
-   background-image: url("../images/about-bg.jpg");
+  background-image: url("../images/about-bg.jpg");
   background-position: left bottom;
   background-repeat: no-repeat;
   background-size: cover;
