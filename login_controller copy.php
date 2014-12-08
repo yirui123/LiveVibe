@@ -75,13 +75,7 @@ if (!empty($_POST["username"]) && !empty($_POST["password"])) {
         $login_time = date("Y-m-d H:i:s");
         $stmtLoginT->bind_param('sss', $submit_username, $login_time, $login_type);
         $stmtLoginT->execute();
-        // Redirect to different page
-        if ($login_type == "user") {
-            redirect('http://localhost:8888/livevibe/user_profile.php');
-        }
-        if ($login_type == "artist") {
-            redirect('http://localhost:8888/livevibe/artist_profile.php');
-        }
+        redirect('http://localhost:8888/livevibe/profile.php');
         $stmtLoginT->closed();
         exit();
     }

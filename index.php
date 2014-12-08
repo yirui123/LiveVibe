@@ -2,6 +2,7 @@
 Author: Xun Gong, Wei Yu
 Date: Dec 4th, 2014 -->
 <?php
+require ("connectdb.php");
 if (isset($_SESSION["username"])) {
     // Update lastaccesstime when page load
     $stmtLAT = $mysqli->prepare("CALL update_LAT(?,?,?)");
@@ -10,12 +11,17 @@ if (isset($_SESSION["username"])) {
     $login_type = $_SESSION["login_type"];
     $stmtLAT->bind_param('sss', $submit_username, $LAT, $login_type);
     $stmtLAT->execute();
-    $stmtLAT->free_result();
-    $stmtLAT->closed();
-    redirect('http://localhost:8888/livevibe/profile.php')
+    // Redirect to different page
+    if ($login_type == "user") {
+        redirect('http://localhost:8888/livevibe/user_profile.php');
+    }
+    if ($login_type == "artist") {
+        redirect('http://localhost:8888/livevibe/artist_profile.php');
+    }
     exit();
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -53,7 +59,7 @@ if (isset($_SESSION["username"])) {
                             <li class="scroll"><a href="#trend">Trend</a></li>
                             <li class="scroll"><a href="#genre">Genre</a></li>
                             <li class="scroll"><a href="#about">About</a></li>
-                            <li class="scroll"><a href="#register">Register</a></li>
+                            <li class="scroll"><a href="register.php">Register</a></li>
                             <li class="dropdown">
                                 <a class="dropdown-toggle" href="#" data-toggle="dropdown">Log In <strong class="caret"></strong></a>
                                 <div class="dropdown-menu" style="padding: 20px; padding-bottom: 0px;">
