@@ -26,12 +26,8 @@ if (isset($_SESSION["username"])) {
     $following_up = 0;
     $reviews = 0;
     
-    $query = "CALL up_info($username)";
     // $stmtUinfo->bind_param('s', $username);
     // $stmtUinfo->execute();
-    if ($mysqli->multi_query($query)) {
-        echo "cao";
-    }
     // $stmtUinfo->bind_result($username, $city, $state);
 
 

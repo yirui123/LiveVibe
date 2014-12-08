@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Dec 08, 2014 at 09:03 AM
+-- Generation Time: Dec 08, 2014 at 11:55 PM
 -- Server version: 5.5.38
 -- PHP Version: 5.6.2
 
@@ -116,6 +116,20 @@ BEGIN
     SET username=uname, realname = realn, birth=bir, city=ct, state=st, zipcode=zip;
 END$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `up_info`(IN `uname` VARCHAR(20))
+    NO SQL
+BEGIN
+
+  SELECT username, city, state FROM uprofile WHERE username = uname;
+    
+    SELECT COUNT(*) AS follower FROM follow WHERE to_usr = uname;
+    
+    SELECT COUNT(*) AS following FROM follow WHERE from_usr = uname;
+    
+    SELECT COUNT(*) AS review_num FROM attendance WHERE username = uname AND review IS NOT NULL;
+  
+END$$
+
 DELIMITER ;
 
 -- --------------------------------------------------------
@@ -174,6 +188,13 @@ CREATE TABLE `attendance` (
   `review` varchar(300) DEFAULT NULL,
   `rv_time` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `attendance`
+--
+
+INSERT INTO `attendance` (`username`, `cid`, `rating`, `review`, `rv_time`) VALUES
+('johndoe', '5500000953', 8, 'Review: A SPECIAL Guest came to concert last night!', '2014-01-26 10:33:35');
 
 -- --------------------------------------------------------
 
@@ -248,6 +269,15 @@ CREATE TABLE `follow` (
   `to_usr` char(10) NOT NULL DEFAULT '',
   `f_time` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `follow`
+--
+
+INSERT INTO `follow` (`from_usr`, `to_usr`, `f_time`) VALUES
+('johndoe', 'mchotdog', '2012-10-08 07:28:33'),
+('magicmike', 'johndoe', '2014-11-12 08:04:21'),
+('test_user', 'johndoe', '2014-10-07 14:24:29');
 
 -- --------------------------------------------------------
 
@@ -339,7 +369,8 @@ CREATE TABLE `uprofile` (
 INSERT INTO `uprofile` (`username`, `realname`, `birth`, `city`, `state`, `zipcode`) VALUES
 ('johndoe', 'John Doe', '1985-05-12 13:44:34', 'New York', 'NY', '10012'),
 ('magicmike', 'Mike Fassbender', '1977-04-02 00:00:00', 'Los Angeles', 'CA', '90001'),
-('mchotdog', 'Barack Obama', '1961-08-04 23:44:34', 'Washington', 'DC', '20500');
+('mchotdog', 'Barack Obama', '1961-08-04 23:44:34', 'Washington', 'DC', '20500'),
+('test_user', 'Test User', '1995-05-20 15:15:00', 'New York', 'NY', '10007');
 
 -- --------------------------------------------------------
 
@@ -360,10 +391,20 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`username`, `userpwd`, `reg_time`, `login_time`, `lastaccess`) VALUES
-('johndoe', 'abc123', '2011-05-12 13:44:34', '2014-12-07 23:21:23', '2014-12-08 00:27:08'),
+('johndoe', 'abc123', '2011-05-12 13:44:34', '2014-12-08 17:28:45', '2014-12-08 17:30:01'),
 ('magicmike', 'abc123', '2014-01-04 12:34:34', '2014-11-23 13:22:48', '2014-11-25 16:42:53'),
-('mchotdog', 'abc123', '2008-09-23 23:44:34', '2014-11-25 06:22:48', '2014-11-25 14:12:13');
+('mchotdog', 'abc123', '2008-09-23 23:44:34', '2014-11-25 06:22:48', '2014-11-25 14:12:13'),
+('test_user', 'abc123', '2014-12-08 09:45:37', '2014-12-08 09:45:37', '2014-12-08 11:15:05');
 
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `usr_follower`
+--
+CREATE TABLE `usr_follower` (
+`to_usr` char(10)
+,`COUNT(DISTINCT from_usr)` bigint(21)
+);
 -- --------------------------------------------------------
 
 --
@@ -412,6 +453,15 @@ INSERT INTO `venues` (`vid`, `vname`, `street`, `city`, `state`, `zipcode`) VALU
 ('8800000765', 'Music Hall of Williamsburg', '66 North 6th St.', 'Brooklyn', 'NY', '11211'),
 ('8800000843', 'Beacon Theatre', '2124 Broadway', 'New York', 'NY', '10023'),
 ('8800000999', 'Terminal 5', '610 W 56th St', 'New York', 'NY', '10019');
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `usr_follower`
+--
+DROP TABLE IF EXISTS `usr_follower`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `usr_follower` AS select `follow`.`to_usr` AS `to_usr`,count(distinct `follow`.`from_usr`) AS `COUNT(DISTINCT from_usr)` from `follow` group by `follow`.`to_usr`;
 
 --
 -- Indexes for dumped tables
