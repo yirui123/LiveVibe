@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Dec 06, 2014 at 11:19 PM
+-- Generation Time: Dec 08, 2014 at 04:25 AM
 -- Server version: 5.5.38
 -- PHP Version: 5.6.2
 
@@ -18,19 +18,86 @@ DELIMITER $$
 --
 -- Procedures
 --
-CREATE DEFINER=`root`@`localhost` PROCEDURE `check_id`(IN `submitted_username` VARCHAR(20), OUT `result` INT)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `check_id`(IN `submitted_name` VARCHAR(20))
 BEGIN
-        SELECT COUNT(*) INTO result
-        FROM users
-        WHERE username = submitted_username;
+  CALL check_id_sub(submitted_name, @type);
+    SELECT @type;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `check_pwd`(IN `submitted_username` VARCHAR(20), IN `submitted_userpwd` VARCHAR(20), OUT `valid` INT)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `check_id_sub`(IN `submitted_name` VARCHAR(20), OUT `usertype` VARCHAR(10))
 BEGIN
-        SELECT COUNT(*) INTO valid
-        FROM users
-        WHERE username = submitted_username AND
-              userpwd  = submitted_userpwd;
+  DECLARE urow INT;
+    DECLARE arow INT;
+    
+  SELECT COUNT(distinct username) INTO urow
+    FROM users
+    WHERE username = submitted_name;
+        
+    IF urow != 0 THEN
+    SET usertype = "user";
+    ELSE
+        SELECT COUNT(distinct artistname) INTO arow
+        FROM artists
+    WHERE artistname = submitted_name;
+      
+        IF arow != 0 THEN
+      SET usertype = "artist";
+      ELSE
+      SET usertype = NULL;
+      END IF;
+    END IF;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `check_pwd`(IN `submitted_name` VARCHAR(20), IN `submitted_pwd` VARCHAR(20), IN `usertype` VARCHAR(10))
+BEGIN
+    IF usertype = "user" THEN
+
+          SELECT username
+            FROM users
+            WHERE username = submitted_name AND userpwd = submitted_pwd;
+          
+        ELSEIF usertype = "artist" THEN
+          
+          SELECT artistname
+            FROM artists
+            WHERE artistname = submitted_name AND artpwd = submitted_pwd;
+          
+        END IF;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `set_reg_time`(IN `submit_name` VARCHAR(20), IN `regT` DATETIME, IN `usertype` VARCHAR(10))
+    NO SQL
+BEGIN
+  IF usertype = "user" THEN
+    UPDATE users SET reg_time = regT
+      WHERE username = submit_name;
+  ELSEIF usertype = "artist" THEN
+    UPDATE artists SET reg_time = regT
+      WHERE artistname = submit_name;
+    END IF;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `update_LAT`(IN `submit_name` VARCHAR(20), IN `LAT` DATETIME, IN `usertype` VARCHAR(10))
+BEGIN
+  IF usertype = "user" THEN
+    UPDATE users SET lastaccess = LAT
+      WHERE username = submit_name;
+  ELSEIF usertype = "artist" THEN
+    UPDATE artists SET lastaccess = LAT
+      WHERE artistname = submit_name;
+    END IF;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `update_login_time`(IN `submit_name` VARCHAR(20), IN `loginT` DATETIME, IN `usertype` VARCHAR(10))
+    NO SQL
+BEGIN
+  IF usertype = "user" THEN
+    UPDATE users SET login_time = loginT
+      WHERE username = submit_name;
+  ELSEIF usertype = "artist" THEN
+    UPDATE artists SET login_time = loginT
+      WHERE artistname = submit_name;
+    END IF;
 END$$
 
 DELIMITER ;
@@ -69,9 +136,9 @@ CREATE TABLE `artists` (
 INSERT INTO `artists` (`artistname`, `artpwd`, `bio`, `reg_time`, `login_time`, `lastaccess`) VALUES
 ('Belle & Sebastian', 'abc123', 'Sounds childish.', '2010-04-22 16:44:34', '2014-11-25 13:22:48', '2014-11-23 15:23:32'),
 ('Billy Joel', 'abc123', 'Sounds old.', '2013-11-22 16:44:34', '2014-09-25 13:22:48', '2014-11-24 09:42:23'),
-('Bob Dylan', 'abc123', 'Sounds old.', '2011-05-22 16:44:34', '2014-10-25 13:22:48', '2014-11-25 13:54:26'),
+('Bob Dylan', 'abc123', 'Sounds old.', '2011-05-22 16:44:34', '2014-12-07 22:12:59', '2014-12-07 22:13:00'),
 ('Damien Rice', 'abc123', 'Sounds good.', '2010-04-22 16:44:34', '2014-11-15 13:22:48', '2014-11-25 16:32:54'),
-('Interpol', 'abc123', 'Sounds gay.', '2009-07-22 16:44:34', '2014-08-25 13:22:48', '2014-11-25 10:23:32'),
+('Interpol', 'abc123', 'Sounds gay.', '2009-06-22 02:36:12', '2014-08-25 13:22:48', '2014-11-25 10:23:32'),
 ('Justin Timberlake', 'abc123', 'Sounds girly.', '2009-04-22 16:44:34', '2014-04-25 13:22:48', '2014-11-22 17:14:24'),
 ('Linkin Park', 'abc123', 'Sounds rude.', '2010-04-22 16:44:34', '2014-05-25 13:22:48', '2014-11-25 14:54:52'),
 ('Maroon 5', 'abc123', 'Sounds pop.', '2013-12-21 16:44:34', '2014-10-12 13:22:48', '2014-11-24 18:15:23'),
@@ -277,7 +344,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`username`, `userpwd`, `reg_time`, `login_time`, `lastaccess`) VALUES
-('johndoe', 'abc123', '2011-05-12 13:44:34', '2014-09-25 13:22:48', '2014-11-12 21:14:32'),
+('johndoe', 'abc123', '2011-05-12 13:44:34', '2014-12-07 22:21:43', '2014-12-07 22:21:43'),
 ('magicmike', 'abc123', '2014-01-04 12:34:34', '2014-11-23 13:22:48', '2014-11-25 16:42:53'),
 ('mchotdog', 'abc123', '2008-09-23 23:44:34', '2014-11-25 06:22:48', '2014-11-25 14:12:13');
 
