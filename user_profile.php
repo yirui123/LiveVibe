@@ -59,16 +59,37 @@ if (isset($_SESSION["username"])) {
     $stmtT->bind_result($sub);
     while ($stmtT->fetch()) {
         $tastes[] = $sub;       
-    }   
+    }
+
+    $mysqli->next_result();
 
     // Calculate Reputation to Display (Star User with a star)
-    $is_star_usr = false;
+    $_SESSION["is_star_usr"] = false;
     $repu = 0.4 * $follower_up + 0.5 * $reviews + 0.1 * $following_up;
     if ($repu > 2) {
-        $is_star_usr = true;
+        $_SESSION["is_star_usr"] = true;
     }
 
     // Grab Concert You Plan to go (In attendance AND before concert time)
+    $plan_to = array();
+    $stmtPlan = $mysqli->prepare("CALL usr_plan_to(?)");
+    $stmtPlan->bind_param('s', $username_up);
+    $stmtPlan->execute();
+    $stmtPlan->bind_result($username, $cid, $artistname, $start_time, $vname, $street, $city, $state, $zipcode);
+    while ($stmtPlan->fetch()) {
+        $one_concert = array("username"   => $username,
+                             "cid"        => $cid,
+                             "artistname" => $artistname,
+                             "start_time" => $start_time,
+                             "vname"      => $vname,
+                             "street"     => $street,
+                             "city"       => $city,
+                             "state"      => $state,
+                             "zipcode"    => $zipcode);
+        $plan_to[] = $one_concert;
+    }
+
+    $mysqli->next_result();   
 
     // Grab Concert Recommended by LiveVibe Star User
 
@@ -130,7 +151,7 @@ if (isset($_SESSION["username"])) {
     </header>
     <!--/#header--> 
 <section id="user_panel">
-    <div class="container">
+
       <div class="row">
           <div class="col-md-10">
           <div class="panel panel-default">
@@ -142,11 +163,11 @@ if (isset($_SESSION["username"])) {
                     <div class="col-xs-12 col-sm-8">
                         <h2><?php echo $username_up; ?>
                         <?php 
-                            if($is_star_usr) {echo "<span class=\"fa fa-star\"></span>";}
+                            if($_SESSION["is_star_usr"]) {echo "<span class=\"fa fa-star\"></span>";}
                         ?>
                         </h2>
 
-                        <p><strong><?php echo $city_up.", ".$state_up?></strong></h3>
+                        <p><h3><strong><?php echo $city_up.", ".$state_up?></strong></h3></p>
                         <p><strong>Taste: </strong>
                         <br>
                         <!-- use php loop to grab information -->
@@ -198,40 +219,172 @@ if (isset($_SESSION["username"])) {
               </div><!--/panel-->
         </div><!--/col--> 
       </div><!--/row--> 
-    </div><!--/container--> 
+    <!--Profile  -->
+
+    <!-- Display Plan to Go -->
+      <div class="row">
+          <div class="col-md-10">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                  <div class="concert-brief">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading text-center"><h2><strong>Concert You Plan To Go</strong></h2></div>
+                            <table class="table">
+                            <!-- php loop to show all plan to concert -->
+                               <?php
+                                    foreach ($plan_to as $con) {
+                                        echo "<th>";
+                                        echo "<div class=\"container-fluid\"><div class=\"row\"><div class=\"col-md-10\">";
+                                        echo "<div class=\"date-and-name\">";
+                                        echo "<h4><span class=\"fa fa-calendar fa-lg\"></span>   ".$con["start_time"]."</h4>";
+                                        echo "<h2><a href=artist_public.php?link=\"".$con["artistname"]."\">".$con["artistname"]."</a></h2>";
+                                        echo "</div>";
+                                        echo "<div class=\"location\"><h4>".$con["vname"]."</h4><p>";
+                                        echo "<span class=\"addr\">";
+                                        echo "<span class=\"street\">  ".$con["street"]."</span>  ,";
+                                        echo "<span class=\"city\">  ".$con["city"]."</span>  ,";
+                                        echo "<span class=\"state\">  ".$con["state"]."</span>  ,";
+                                        echo "<span class=\"zipcode\">  ".$con["zipcode"]."</span>";
+                                        echo "<a href=concert_info.php?link=\"".$con["cid"]."\"><h4>Concert Details</h4></a>";
+                                        echo "</span></p></div></div></div></div></th>";
+                                    }
+                                ?>
+                            </table><!-- table -->
+                    </div><!-- concert-brief -->
+                </div><!--/panel-body-->
+            </div><!--/panel-->
+          </div><!--/col--> 
+      </div><!--/row--> 
+    <!--Plan to go  -->
+
+
+    <!-- Display You Followed Recommend List -->
+      <div class="row">
+          <div class="col-md-10">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                  <div class="concert-brief">
+                    <div class="panel panel-info">
+                        <div class="panel-heading text-center"><h2><strong>Concert You Plan To Go</strong></h2></div>
+                            <table class="table">
+                            <!-- php loop to show all plan to concert -->
+                               <?php
+                                    foreach ($plan_to as $con) {
+                                        echo "<th>";
+                                        echo "<div class=\"container-fluid\"><div class=\"row\"><div class=\"col-md-10\">";
+                                        echo "<div class=\"date-and-name\">";
+                                        echo "<h4><span class=\"fa fa-calendar fa-lg\"></span>   ".$con["start_time"]."</h4>";
+                                        echo "<h2><a href=artist_public.php?link=\"".$con["artistname"]."\">".$con["artistname"]."</a></h2>";
+                                        echo "</div>";
+                                        echo "<div class=\"location\"><h4>".$con["vname"]."</h4><p>";
+                                        echo "<span class=\"addr\">";
+                                        echo "<span class=\"street\">  ".$con["street"]."</span>  ,";
+                                        echo "<span class=\"city\">  ".$con["city"]."</span>  ,";
+                                        echo "<span class=\"state\">  ".$con["state"]."</span>  ,";
+                                        echo "<span class=\"zipcode\">  ".$con["zipcode"]."</span>";
+                                        echo "<a href=concert_info.php?link=\"".$con["cid"]."\"><h4>Concert Details</h4></a>";
+                                        echo "</span></p></div></div></div></div></th>";
+                                    }
+                                ?>
+                            </table><!-- table -->
+                    </div><!-- concert-brief -->
+                </div><!--/panel-body-->
+            </div><!--/panel-->
+          </div><!--/col--> 
+      </div><!--/row--> 
+    <!--Followed Recommend List  -->
+
+    <!-- Display System Guess -->
+      <div class="row">
+          <div class="col-md-10">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                  <div class="concert-brief">
+                    <div class="panel panel-success">
+                        <div class="panel-heading text-center"><h2><strong>Concert You Plan To Go</strong></h2></div>
+                            <table class="table">
+                            <!-- php loop to show all plan to concert -->
+                               <?php
+                                    foreach ($plan_to as $con) {
+                                        echo "<th>";
+                                        echo "<div class=\"container-fluid\"><div class=\"row\"><div class=\"col-md-10\">";
+                                        echo "<div class=\"date-and-name\">";
+                                        echo "<h4><span class=\"fa fa-calendar fa-lg\"></span>   ".$con["start_time"]."</h4>";
+                                        echo "<h2><a href=artist_public.php?link=\"".$con["artistname"]."\">".$con["artistname"]."</a></h2>";
+                                        echo "</div>";
+                                        echo "<div class=\"location\"><h4>".$con["vname"]."</h4><p>";
+                                        echo "<span class=\"addr\">";
+                                        echo "<span class=\"street\">  ".$con["street"]."</span>  ,";
+                                        echo "<span class=\"city\">  ".$con["city"]."</span>  ,";
+                                        echo "<span class=\"state\">  ".$con["state"]."</span>  ,";
+                                        echo "<span class=\"zipcode\">  ".$con["zipcode"]."</span>";
+                                        echo "<a href=concert_info.php?link=\"".$con["cid"]."\"><h4>Concert Details</h4></a>";
+                                        echo "</span></p></div></div></div></div></th>";
+                                    }
+                                ?>
+                            </table><!-- table -->
+                    </div><!-- concert-brief -->
+                </div><!--/panel-body-->
+            </div><!--/panel-->
+          </div><!--/col--> 
+      </div><!--/row--> 
+    <!--System Guess -->
+
 </section>
 
+</section>
         <style>
-        body {
-            background-image: url("./images/bg/register_bg.png");
-            background-color: #A30000;
-        }
+            body {
+                background-image: url("./images/bg/register_bg.png");
+                background-color: #A30000;
+                background-repeat:no-repeat;
+                background-size:cover;
+                background-position: top center !important;
+                background-repeat: no-repeat !important;
+                background-attachment: fixed;
+                margin: 0;
+                padding: 0;
+                height: 100%;
+                width: 100%;
+            }
 
-        #user_panel {
-            padding-top: 100px;
-            color: #03695E;
-            padding-left: 140px;
-        }
+            #user_panel {
+                padding-top: 100px;
+                color: #03695E;
+                padding-left: 140px;
+            }
 
-        .navbar-brand {
-          background-color: #A30000;
-          height: 80px;
-          margin-bottom: 20px;
-          position: relative;
-          width: 640px;
-          opacity: .95
-        }
-        .panel  {
-            opacity: 0.9;
-        }
+            .navbar-brand {
+              background-color: #A30000;
+              height: 80px;
+              margin-bottom: 20px;
+              position: relative;
+              width: 640px;
+              opacity: .95
+            }
+            .panel  {
+                opacity: 0.9;
+            }
 
-        .fa-star {
-            color: #FFD700;
-        }
+            .fa-star {
+                color: #FFD700;
+            }
 
-        </style> 
+            .fa-calendar {
+                color: #A30000;
+            }
 
-    </section>
+            #user_panel .row {
+                margin-right: auto;
+                margin-left: auto;
+            }
+
+            .navbar-collapse {
+                padding-left: 0px;
+                padding-right: 0px;
+            }
+        </style>
+</section>
     <script type="text/javascript" src="js/jquery.js"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
     <script type="text/javascript" src="js/bootstrap-select.js"></script>
