@@ -14,8 +14,6 @@ if (isset($_SESSION["username"])) {
     $login_type = $_SESSION["login_type"];
     $stmtLAT->bind_param('sss', $submit_username, $LAT, $login_type);
     $stmtLAT->execute();
-    // $stmtLAT->free_result();
-    // $stmtLAT->close();
     $mysqli->next_result();
     // Grab user date to perform user information
     // Set local var
@@ -25,28 +23,24 @@ if (isset($_SESSION["username"])) {
     $follower_up = 0;
     $following_up = 0;
     $reviews = 0;
-    
-    // $stmtUinfo->bind_param('s', $username);
-    // $stmtUinfo->execute();
-    // $stmtUinfo->bind_result($username, $city, $state);
+    // Execute query
+    $stmtUinfo = $mysqli->prepare("CALL up_info(?)");
+    $stmtUinfo->bind_param('s', $username);
+    $stmtUinfo->execute();
+    $stmtUinfo->bind_result($username, $city, $state, $flwer_num, $flw_num, $review_num);
+    while ($stmtUinfo->fetch()) {
+        $city_up = $city;
+        $state_up = $state;
+        $follower_up = $flwer_num;
+        $following_up = $flw_num;
+        $reviews = $review_num;        
+    }
 
-
-    // Fetch 1st result (username, city, state)
-    // while ($stmtUinfo->fetch()) {
-    //     // echo $username;
-    //     $city_up = $city;
-    //     $state_up = $state;
-    // }
-    // $mysqli->next_result();
-    // // Fetch 2nd result 
-    // $stmtUinfo->bind_result($follower);
-    // while ($stmtUinfo->fetch()) {
-    //     // echo $username;
-    //     $follower_up = $follower;
-    // }
-
+    $mysqli->next_result();
 
     // Grab genre select options
+    $genre_opt = array();
+    $genre_opt = 
 }
 
 
