@@ -61,9 +61,14 @@ if (isset($_SESSION["username"])) {
         $tastes[] = $sub;       
     }   
 
-    // Grab Reputation to Display (Star User with a star)
+    // Calculate Reputation to Display (Star User with a star)
+    $is_star_usr = false;
+    $repu = 0.4 * $follower_up + 0.5 * $reviews + 0.1 * $following_up;
+    if ($repu > 2) {
+        $is_star_usr = true;
+    }
 
-    // Grab Concert You Plan to go
+    // Grab Concert You Plan to go (In attendance AND before concert time)
 
     // Grab Concert Recommended by LiveVibe Star User
 
@@ -135,14 +140,20 @@ if (isset($_SESSION["username"])) {
                         <img src="http://api.randomuser.me/portraits/men/47.jpg" alt="" class="center-block img-circle img-responsive">
                     </div><!--/col--> 
                     <div class="col-xs-12 col-sm-8">
-                        <h2><?php echo $username_up; ?></h2>
-                        <br>
+                        <h2><?php echo $username_up; ?>
+                        <?php 
+                            if($is_star_usr) {echo "<span class=\"fa fa-star\"></span>";}
+                        ?>
+                        </h2>
+
                         <p><strong><?php echo $city_up.", ".$state_up?></strong></h3>
                         <p><strong>Taste: </strong>
+                        <br>
                         <!-- use php loop to grab information -->
                             <?php
                                 foreach ($tastes as $tag) {
                                     echo "<span class=\"label label-info tags\">".$tag."</span>";
+                                    echo "<br>";
                                 }
                             ?>
                         </p>
@@ -178,7 +189,7 @@ if (isset($_SESSION["username"])) {
                                 </div>
                             </div>
                             <br>
-                            <button type="submit" class="btn btn-info btn-block"><span class="fa fa-music"></span>Add Genre You Like</button>
+                            <button type="submit" class="btn btn-info btn-block"><span class="fa fa-music"></span>  Add Genre You Like</button>
                             </form>
                     </div>
 
@@ -212,6 +223,10 @@ if (isset($_SESSION["username"])) {
         }
         .panel  {
             opacity: 0.9;
+        }
+
+        .fa-star {
+            color: #FFD700;
         }
 
         </style> 

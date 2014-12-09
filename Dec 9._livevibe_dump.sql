@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Dec 09, 2014 at 05:32 AM
+-- Generation Time: Dec 09, 2014 at 06:08 PM
 -- Server version: 5.5.38
 -- PHP Version: 5.6.2
 
@@ -216,7 +216,10 @@ CREATE TABLE `attendance` (
 --
 
 INSERT INTO `attendance` (`username`, `cid`, `rating`, `review`, `rv_time`) VALUES
-('johndoe', '5500000953', 8, 'Review: A SPECIAL Guest came to concert last night!', '2014-01-26 10:33:35');
+('johndoe', '5500000634', NULL, NULL, NULL),
+('johndoe', '5500000953', 8, 'Review: A SPECIAL Guest came to concert last night!', '2014-01-26 10:33:35'),
+('mchotdog', '5500000432', 8, 'Review: My girlfriend got crazy last night.', '2014-11-25 13:34:14'),
+('mchotdog', '5500000945', 7, 'Review: A little bit disappointed.', '2014-11-30 11:37:48');
 
 -- --------------------------------------------------------
 
@@ -299,7 +302,9 @@ CREATE TABLE `follow` (
 INSERT INTO `follow` (`from_usr`, `to_usr`, `f_time`) VALUES
 ('johndoe', 'mchotdog', '2012-10-08 07:28:33'),
 ('magicmike', 'johndoe', '2014-11-12 08:04:21'),
-('test_user', 'johndoe', '2014-10-07 14:24:29');
+('magicmike', 'mchotdog', '2014-11-27 10:26:35'),
+('test_user', 'johndoe', '2014-10-07 14:24:29'),
+('test_user', 'mchotdog', '2014-12-02 18:37:00');
 
 -- --------------------------------------------------------
 
@@ -417,10 +422,10 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`username`, `userpwd`, `reg_time`, `login_time`, `lastaccess`) VALUES
-('johndoe', 'abc123', '2011-05-12 13:44:34', '2014-12-08 22:53:47', '2014-12-08 23:16:52'),
+('johndoe', 'abc123', '2011-05-12 13:44:34', '2014-12-09 12:06:06', '2014-12-09 12:06:06'),
 ('magicmike', 'abc123', '2014-01-04 12:34:34', '2014-11-23 13:22:48', '2014-11-25 16:42:53'),
-('mchotdog', 'abc123', '2008-09-23 23:44:34', '2014-11-25 06:22:48', '2014-11-25 14:12:13'),
-('test_user', 'abc123', '2014-12-08 09:45:37', '2014-12-08 09:45:37', '2014-12-08 11:15:05');
+('mchotdog', 'abc123', '2008-09-23 23:44:34', '2014-12-09 12:06:39', '2014-12-09 12:06:39'),
+('test_user', 'abc123', '2014-12-08 09:45:37', '2014-12-09 12:06:26', '2014-12-09 12:06:26');
 
 -- --------------------------------------------------------
 
@@ -428,7 +433,7 @@ INSERT INTO `users` (`username`, `userpwd`, `reg_time`, `login_time`, `lastacces
 -- Stand-in structure for view `usr_follower`
 --
 CREATE TABLE `usr_follower` (
-`to_usr` char(10)
+`to_usr` varchar(20)
 ,`flwer_num` bigint(21)
 );
 -- --------------------------------------------------------
@@ -437,7 +442,7 @@ CREATE TABLE `usr_follower` (
 -- Stand-in structure for view `usr_following`
 --
 CREATE TABLE `usr_following` (
-`from_usr` char(10)
+`from_usr` varchar(20)
 ,`flw_num` bigint(21)
 );
 -- --------------------------------------------------------
@@ -523,7 +528,7 @@ INSERT INTO `venues` (`vid`, `vname`, `street`, `city`, `state`, `zipcode`) VALU
 --
 DROP TABLE IF EXISTS `usr_follower`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `usr_follower` AS select `follow`.`to_usr` AS `to_usr`,count(distinct `follow`.`from_usr`) AS `flwer_num` from `follow` group by `follow`.`to_usr`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `usr_follower` AS select `users`.`username` AS `to_usr`,count(distinct `follow`.`from_usr`) AS `flwer_num` from (`users` left join `follow` on((`users`.`username` = `follow`.`to_usr`))) group by `users`.`username`;
 
 -- --------------------------------------------------------
 
@@ -532,7 +537,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `usr_following`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `usr_following` AS select `follow`.`from_usr` AS `from_usr`,count(distinct `follow`.`to_usr`) AS `flw_num` from `follow` group by `follow`.`from_usr`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `usr_following` AS select `users`.`username` AS `from_usr`,count(distinct `follow`.`to_usr`) AS `flw_num` from (`users` left join `follow` on((`users`.`username` = `follow`.`from_usr`))) group by `users`.`username`;
 
 -- --------------------------------------------------------
 
@@ -550,7 +555,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `usr_review`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `usr_review` AS select `attendance`.`username` AS `username`,count(distinct `attendance`.`review`) AS `review_num` from `attendance` group by `attendance`.`username`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `usr_review` AS select `users`.`username` AS `username`,count(distinct `attendance`.`review`) AS `review_num` from (`users` left join `attendance` on((`users`.`username` = `attendance`.`username`))) group by `users`.`username`;
 
 --
 -- Indexes for dumped tables
