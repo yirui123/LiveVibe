@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Dec 09, 2014 at 04:19 AM
+-- Generation Time: Dec 09, 2014 at 05:32 AM
 -- Server version: 5.5.38
 -- PHP Version: 5.6.2
 
@@ -18,6 +18,20 @@ DELIMITER $$
 --
 -- Procedures
 --
+CREATE DEFINER=`root`@`localhost` PROCEDURE `add_genre`(IN `uname` VARCHAR(20), IN `type` VARCHAR(10), IN `genre` VARCHAR(20))
+    NO SQL
+BEGIN
+  IF type = "user" THEN
+    INSERT INTO u_sub SET
+        username = uname,
+        sub = genre;
+  ELSEIF type = "artist" THEN
+    INSERT INTO a_sub SET
+        artistname = uname,
+        sub = genre;
+    END IF;
+END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `artist_insert`(IN `aname` VARCHAR(30), IN `apwd` VARCHAR(20), IN `b` VARCHAR(300), IN `rt` DATETIME)
     NO SQL
 BEGIN
@@ -76,6 +90,12 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `list_genre`()
     NO SQL
 BEGIN
   SELECT sub FROM genres;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `list_taste`(IN `uname` VARCHAR(20))
+    NO SQL
+BEGIN
+  SELECT sub FROM u_sub WHERE username = uname;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `set_reg_time`(IN `submit_name` VARCHAR(20), IN `regT` DATETIME, IN `usertype` VARCHAR(10))
@@ -397,7 +417,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`username`, `userpwd`, `reg_time`, `login_time`, `lastaccess`) VALUES
-('johndoe', 'abc123', '2011-05-12 13:44:34', '2014-12-08 21:43:20', '2014-12-08 21:43:20'),
+('johndoe', 'abc123', '2011-05-12 13:44:34', '2014-12-08 22:53:47', '2014-12-08 23:16:52'),
 ('magicmike', 'abc123', '2014-01-04 12:34:34', '2014-11-23 13:22:48', '2014-11-25 16:42:53'),
 ('mchotdog', 'abc123', '2008-09-23 23:44:34', '2014-11-25 06:22:48', '2014-11-25 14:12:13'),
 ('test_user', 'abc123', '2014-12-08 09:45:37', '2014-12-08 09:45:37', '2014-12-08 11:15:05');

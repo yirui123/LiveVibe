@@ -15,6 +15,7 @@ if (isset($_SESSION["username"])) {
     $stmtLAT->bind_param('sss', $submit_username, $LAT, $login_type);
     $stmtLAT->execute();
     $mysqli->next_result();
+
     // Grab user date to perform user information
     // Set local var
     $username_up = $_SESSION["username"];
@@ -39,7 +40,7 @@ if (isset($_SESSION["username"])) {
 
     $mysqli->next_result();
 
-    // // Grab genre select options
+    // Grab genre select options
     $genre_opt = array();
     $stmtGenre = $mysqli->prepare("CALL list_genre()");
     $stmtGenre->execute();
@@ -49,6 +50,26 @@ if (isset($_SESSION["username"])) {
     }
 
     $mysqli->next_result();
+
+    // Grab Taste of User or Genre of Artist
+    $tastes = array();
+    $stmtT = $mysqli->prepare("CALL list_taste(?)");
+    $stmtT->bind_param('s', $username_up);
+    $stmtT->execute();
+    $stmtT->bind_result($sub);
+    while ($stmtT->fetch()) {
+        $tastes[] = $sub;       
+    }   
+
+    // Grab Reputation to Display (Star User with a star)
+
+    // Grab Concert You Plan to go
+
+    // Grab Concert Recommended by LiveVibe Star User
+
+    // Grab Concert Recommended by LiveVibe System based on Taste
+
+
 }
 
 
@@ -119,10 +140,11 @@ if (isset($_SESSION["username"])) {
                         <p><strong><?php echo $city_up.", ".$state_up?></strong></h3>
                         <p><strong>Taste: </strong>
                         <!-- use php loop to grab information -->
-                            <span class="label label-info tags">Jazz</span> 
-                            <span class="label label-info tags">Pop</span>
-                            <span class="label label-info tags">Indie Rock</span>
-                            <span class="label label-info tags">Rock</span>
+                            <?php
+                                foreach ($tastes as $tag) {
+                                    echo "<span class=\"label label-info tags\">".$tag."</span>";
+                                }
+                            ?>
                         </p>
                     </div><!--/col-->          
                     <div class="clearfix"></div>
