@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Dec 08, 2014 at 11:55 PM
+-- Generation Time: Dec 09, 2014 at 02:06 AM
 -- Server version: 5.5.38
 -- PHP Version: 5.6.2
 
@@ -119,15 +119,11 @@ END$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `up_info`(IN `uname` VARCHAR(20))
     NO SQL
 BEGIN
-
-  SELECT username, city, state FROM uprofile WHERE username = uname;
-    
-    SELECT COUNT(*) AS follower FROM follow WHERE to_usr = uname;
-    
-    SELECT COUNT(*) AS following FROM follow WHERE from_usr = uname;
-    
-    SELECT COUNT(*) AS review_num FROM attendance WHERE username = uname AND review IS NOT NULL;
-  
+  SELECT usr_geo.username, usr_geo.city, usr_geo.state, usr_follower.flwer_num, usr_following.flw_num, usr_review.review_num
+    FROM usr_geo JOIN usr_follower JOIN usr_following JOIN usr_review
+    WHERE usr_geo.username = uname AND usr_follower.to_usr = uname    
+          AND usr_following.from_usr = uname
+          AND usr_review.username = uname;
 END$$
 
 DELIMITER ;
@@ -391,7 +387,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`username`, `userpwd`, `reg_time`, `login_time`, `lastaccess`) VALUES
-('johndoe', 'abc123', '2011-05-12 13:44:34', '2014-12-08 17:28:45', '2014-12-08 17:30:01'),
+('johndoe', 'abc123', '2011-05-12 13:44:34', '2014-12-08 19:17:55', '2014-12-08 19:45:12'),
 ('magicmike', 'abc123', '2014-01-04 12:34:34', '2014-11-23 13:22:48', '2014-11-25 16:42:53'),
 ('mchotdog', 'abc123', '2008-09-23 23:44:34', '2014-11-25 06:22:48', '2014-11-25 14:12:13'),
 ('test_user', 'abc123', '2014-12-08 09:45:37', '2014-12-08 09:45:37', '2014-12-08 11:15:05');
@@ -403,7 +399,35 @@ INSERT INTO `users` (`username`, `userpwd`, `reg_time`, `login_time`, `lastacces
 --
 CREATE TABLE `usr_follower` (
 `to_usr` char(10)
-,`COUNT(DISTINCT from_usr)` bigint(21)
+,`flwer_num` bigint(21)
+);
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `usr_following`
+--
+CREATE TABLE `usr_following` (
+`from_usr` char(10)
+,`flw_num` bigint(21)
+);
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `usr_geo`
+--
+CREATE TABLE `usr_geo` (
+`username` varchar(20)
+,`city` varchar(20)
+,`state` varchar(20)
+);
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `usr_review`
+--
+CREATE TABLE `usr_review` (
+`username` varchar(20)
+,`review_num` bigint(21)
 );
 -- --------------------------------------------------------
 
@@ -461,7 +485,34 @@ INSERT INTO `venues` (`vid`, `vname`, `street`, `city`, `state`, `zipcode`) VALU
 --
 DROP TABLE IF EXISTS `usr_follower`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `usr_follower` AS select `follow`.`to_usr` AS `to_usr`,count(distinct `follow`.`from_usr`) AS `COUNT(DISTINCT from_usr)` from `follow` group by `follow`.`to_usr`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `usr_follower` AS select `follow`.`to_usr` AS `to_usr`,count(distinct `follow`.`from_usr`) AS `flwer_num` from `follow` group by `follow`.`to_usr`;
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `usr_following`
+--
+DROP TABLE IF EXISTS `usr_following`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `usr_following` AS select `follow`.`from_usr` AS `from_usr`,count(distinct `follow`.`to_usr`) AS `flw_num` from `follow` group by `follow`.`from_usr`;
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `usr_geo`
+--
+DROP TABLE IF EXISTS `usr_geo`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `usr_geo` AS select `uprofile`.`username` AS `username`,`uprofile`.`city` AS `city`,`uprofile`.`state` AS `state` from `uprofile` group by `uprofile`.`username`,`uprofile`.`city`,`uprofile`.`state`;
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `usr_review`
+--
+DROP TABLE IF EXISTS `usr_review`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `usr_review` AS select `attendance`.`username` AS `username`,count(distinct `attendance`.`review`) AS `review_num` from `attendance` group by `attendance`.`username`;
 
 --
 -- Indexes for dumped tables
