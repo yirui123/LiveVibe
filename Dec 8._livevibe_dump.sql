@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Dec 09, 2014 at 02:06 AM
+-- Generation Time: Dec 09, 2014 at 04:19 AM
 -- Server version: 5.5.38
 -- PHP Version: 5.6.2
 
@@ -70,6 +70,12 @@ BEGIN
             WHERE artistname = submitted_name AND artpwd = submitted_pwd;
           
         END IF;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `list_genre`()
+    NO SQL
+BEGIN
+  SELECT sub FROM genres;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `set_reg_time`(IN `submit_name` VARCHAR(20), IN `regT` DATETIME, IN `usertype` VARCHAR(10))
@@ -292,10 +298,14 @@ CREATE TABLE `genres` (
 
 INSERT INTO `genres` (`sub`, `main`) VALUES
 ('Alternative rock', 'Rock'),
+('Classic Country', 'Country'),
 ('Indie folk', 'Folk'),
 ('Indie pop', 'Pop'),
 ('Indie rock', 'Rock'),
-('Pop rock', 'Rock');
+('New School Hip-Hop', 'Hip-Hop'),
+('Old School Hip-Hop', 'Hip-Hop'),
+('Pop rock', 'Rock'),
+('Texas Country', 'Country');
 
 -- --------------------------------------------------------
 
@@ -387,7 +397,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`username`, `userpwd`, `reg_time`, `login_time`, `lastaccess`) VALUES
-('johndoe', 'abc123', '2011-05-12 13:44:34', '2014-12-08 19:17:55', '2014-12-08 19:45:12'),
+('johndoe', 'abc123', '2011-05-12 13:44:34', '2014-12-08 21:43:20', '2014-12-08 21:43:20'),
 ('magicmike', 'abc123', '2014-01-04 12:34:34', '2014-11-23 13:22:48', '2014-11-25 16:42:53'),
 ('mchotdog', 'abc123', '2008-09-23 23:44:34', '2014-11-25 06:22:48', '2014-11-25 14:12:13'),
 ('test_user', 'abc123', '2014-12-08 09:45:37', '2014-12-08 09:45:37', '2014-12-08 11:15:05');
@@ -446,7 +456,15 @@ CREATE TABLE `u_sub` (
 
 INSERT INTO `u_sub` (`username`, `sub`) VALUES
 ('johndoe', 'Alternative rock'),
-('johndoe', 'Indie rock');
+('mchotdog', 'Alternative rock'),
+('magicmike', 'Indie folk'),
+('test_user', 'Indie folk'),
+('johndoe', 'Indie rock'),
+('mchotdog', 'Indie rock'),
+('mchotdog', 'New School Hip-Hop'),
+('test_user', 'Old School Hip-Hop'),
+('magicmike', 'Pop rock'),
+('test_user', 'Texas Country');
 
 -- --------------------------------------------------------
 
