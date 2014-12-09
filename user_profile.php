@@ -17,7 +17,7 @@ if (isset($_SESSION["username"])) {
     $mysqli->next_result();
     // Grab user date to perform user information
     // Set local var
-    $username = $_SESSION["username"];
+    $username_up = $_SESSION["username"];
     $city_up = NULL;
     $state_up = NULL;
     $follower_up = 0;
@@ -25,9 +25,10 @@ if (isset($_SESSION["username"])) {
     $reviews = 0;
     // Execute query
     $stmtUinfo = $mysqli->prepare("CALL up_info(?)");
-    $stmtUinfo->bind_param('s', $username);
+    $stmtUinfo->bind_param('s', $username_up);
     $stmtUinfo->execute();
     $stmtUinfo->bind_result($username, $city, $state, $flwer_num, $flw_num, $review_num);
+
     while ($stmtUinfo->fetch()) {
         $city_up = $city;
         $state_up = $state;
@@ -38,9 +39,16 @@ if (isset($_SESSION["username"])) {
 
     $mysqli->next_result();
 
-    // Grab genre select options
+    // // Grab genre select options
     $genre_opt = array();
-    $genre_opt = 
+    $stmtGenre = $mysqli->prepare("CALL list_genre()");
+    $stmtGenre->execute();
+    $stmtGenre->bind_result($sub);
+    while ($stmtGenre->fetch()) {
+        $genre_opt[] = $sub;       
+    }
+
+    $mysqli->next_result();
 }
 
 
@@ -106,7 +114,7 @@ if (isset($_SESSION["username"])) {
                         <img src="http://api.randomuser.me/portraits/men/47.jpg" alt="" class="center-block img-circle img-responsive">
                     </div><!--/col--> 
                     <div class="col-xs-12 col-sm-8">
-                        <h2><?php echo $username; ?></h2>
+                        <h2><?php echo $username_up; ?></h2>
                         <br>
                         <p><strong><?php echo $city_up.", ".$state_up?></strong></h3>
                         <p><strong>Taste: </strong>
@@ -139,9 +147,11 @@ if (isset($_SESSION["username"])) {
                             <div class="row">
                                 <div class="col-xs-12 col-sm-12">
                                     <select  name="genre" class="selectpicker" data-style="btn-success" >
-                                        <option>Indie Rock</option>
-                                        <option>Alternative Rock</option>
-                                        <option>Pop</option>
+                                        <?php 
+                                            foreach ($genre_opt as $sub) {
+                                                 echo "<option>".$sub."</option>";
+                                             } 
+                                        ?>
                                     </select>
                                 </div>
                             </div>
