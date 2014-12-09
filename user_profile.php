@@ -228,7 +228,7 @@ if (isset($_SESSION["username"])) {
                 <div class="panel-body">
                   <div class="concert-brief">
                     <div class="panel panel-primary">
-                        <div class="panel-heading text-center"><h2><strong>Concert You Plan To Go</strong></h2></div>
+                        <div class="panel-heading text-center"><h2><strong>Concerts You Plan To Go</strong></h2></div>
                             <table class="table">
                             <!-- php loop to show all plan to concert -->
                                <?php
@@ -237,13 +237,15 @@ if (isset($_SESSION["username"])) {
                                         echo "<div class=\"container-fluid\"><div class=\"row\"><div class=\"col-md-10\">";
                                         echo "<div class=\"date-and-name\">";
                                         echo "<h4><span class=\"fa fa-calendar fa-lg\"></span>   ".$con["start_time"]."</h4>";
-                                        echo "<h2><a href=artist_public.php?link=\"".$con["artistname"]."\">".$con["artistname"]."</a></h2>";
+                                        echo "<h3><a href=artist_public.php?link=\"".$con["artistname"]."\">".$con["artistname"]."</a></h3>";
                                         echo "</div>";
                                         echo "<div class=\"location\"><h4>".$con["vname"]."</h4><p>";
                                         echo "<span class=\"addr\">";
-                                        echo "<span class=\"street\">  ".$con["street"]."</span>  ,";
+                                        echo "<span class=\"street\">  ".$con["street"]."</span>";
+                                        echo "<br>";
                                         echo "<span class=\"city\">  ".$con["city"]."</span>  ,";
                                         echo "<span class=\"state\">  ".$con["state"]."</span>  ,";
+                                        echo "<br>";
                                         echo "<span class=\"zipcode\">  ".$con["zipcode"]."</span>";
                                         echo "<a href=concert_info.php?link=\"".$con["cid"]."\"><h4>Concert Details</h4></a>";
                                         echo "</span></p></div></div></div></div></th>";
@@ -265,7 +267,7 @@ if (isset($_SESSION["username"])) {
                 <div class="panel-body">
                   <div class="concert-brief">
                     <div class="panel panel-info">
-                        <div class="panel-heading text-center"><h2><strong>Concert You Plan To Go</strong></h2></div>
+                        <div class="panel-heading text-center"><h2><strong>Concerts From Star User You Follow</strong></h2></div>
                             <table class="table">
                             <!-- php loop to show all plan to concert -->
                                <?php
@@ -274,13 +276,15 @@ if (isset($_SESSION["username"])) {
                                         echo "<div class=\"container-fluid\"><div class=\"row\"><div class=\"col-md-10\">";
                                         echo "<div class=\"date-and-name\">";
                                         echo "<h4><span class=\"fa fa-calendar fa-lg\"></span>   ".$con["start_time"]."</h4>";
-                                        echo "<h2><a href=artist_public.php?link=\"".$con["artistname"]."\">".$con["artistname"]."</a></h2>";
+                                        echo "<h3><a href=artist_public.php?link=\"".$con["artistname"]."\">".$con["artistname"]."</a></h3>";
                                         echo "</div>";
                                         echo "<div class=\"location\"><h4>".$con["vname"]."</h4><p>";
                                         echo "<span class=\"addr\">";
-                                        echo "<span class=\"street\">  ".$con["street"]."</span>  ,";
+                                        echo "<span class=\"street\">  ".$con["street"]."</span>";
+                                        echo "<br>";
                                         echo "<span class=\"city\">  ".$con["city"]."</span>  ,";
                                         echo "<span class=\"state\">  ".$con["state"]."</span>  ,";
+                                        echo "<br>";
                                         echo "<span class=\"zipcode\">  ".$con["zipcode"]."</span>";
                                         echo "<a href=concert_info.php?link=\"".$con["cid"]."\"><h4>Concert Details</h4></a>";
                                         echo "</span></p></div></div></div></div></th>";
@@ -301,7 +305,7 @@ if (isset($_SESSION["username"])) {
                 <div class="panel-body">
                   <div class="concert-brief">
                     <div class="panel panel-success">
-                        <div class="panel-heading text-center"><h2><strong>Concert You Plan To Go</strong></h2></div>
+                        <div class="panel-heading text-center"><h2><strong>Concerts From <em> VibeGuess</em></strong></h2></div>
                             <table class="table">
                             <!-- php loop to show all plan to concert -->
                                <?php
@@ -310,13 +314,15 @@ if (isset($_SESSION["username"])) {
                                         echo "<div class=\"container-fluid\"><div class=\"row\"><div class=\"col-md-10\">";
                                         echo "<div class=\"date-and-name\">";
                                         echo "<h4><span class=\"fa fa-calendar fa-lg\"></span>   ".$con["start_time"]."</h4>";
-                                        echo "<h2><a href=artist_public.php?link=\"".$con["artistname"]."\">".$con["artistname"]."</a></h2>";
+                                        echo "<h3><a href=artist_public.php?link=\"".$con["artistname"]."\">".$con["artistname"]."</a></h3>";
                                         echo "</div>";
                                         echo "<div class=\"location\"><h4>".$con["vname"]."</h4><p>";
                                         echo "<span class=\"addr\">";
-                                        echo "<span class=\"street\">  ".$con["street"]."</span>  ,";
+                                        echo "<span class=\"street\">  ".$con["street"]."</span>";
+                                        echo "<br>";
                                         echo "<span class=\"city\">  ".$con["city"]."</span>  ,";
                                         echo "<span class=\"state\">  ".$con["state"]."</span>  ,";
+                                        echo "<br>";
                                         echo "<span class=\"zipcode\">  ".$con["zipcode"]."</span>";
                                         echo "<a href=concert_info.php?link=\"".$con["cid"]."\"><h4>Concert Details</h4></a>";
                                         echo "</span></p></div></div></div></div></th>";
@@ -382,6 +388,10 @@ if (isset($_SESSION["username"])) {
             .navbar-collapse {
                 padding-left: 0px;
                 padding-right: 0px;
+            }
+
+            .table {
+                font-size: 14px;
             }
         </style>
 </section>
