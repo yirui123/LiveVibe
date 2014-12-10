@@ -91,7 +91,8 @@ if (isset($_SESSION["username"])) {
 
     $mysqli->next_result();   
 
-    // Grab Concert Recommended by LiveVibe Star User
+    // Grab NEW Concert Recommended by LiveVibe Star User
+    
 
     // Grab Concert Recommended by LiveVibe System based on Taste
 
@@ -228,7 +229,7 @@ if (isset($_SESSION["username"])) {
                 <div class="panel-body">
                   <div class="concert-brief">
                     <div class="panel panel-primary">
-                        <div class="panel-heading text-center"><h2><strong>Concerts You Plan To Go</strong></h2></div>
+                        <div class="panel-heading text-center"><h2><strong>Plan To Go</strong></h2></div>
                             <table class="table">
                             <!-- php loop to show all plan to concert -->
                                <?php
@@ -267,9 +268,9 @@ if (isset($_SESSION["username"])) {
                 <div class="panel-body">
                   <div class="concert-brief">
                     <div class="panel panel-info">
-                        <div class="panel-heading text-center"><h2><strong>Concerts From Star User You Follow</strong></h2></div>
+                        <div class="panel-heading text-center"><h2><strong>News Feed</strong></h2></div>
                             <table class="table">
-                            <!-- php loop to show all plan to concert -->
+                            <!-- php loop concert -->
                                <?php
                                     foreach ($plan_to as $con) {
                                         echo "<th>";
@@ -305,9 +306,9 @@ if (isset($_SESSION["username"])) {
                 <div class="panel-body">
                   <div class="concert-brief">
                     <div class="panel panel-success">
-                        <div class="panel-heading text-center"><h2><strong>Concerts From <em> VibeGuess</em></strong></h2></div>
+                        <div class="panel-heading text-center"><h2><strong>Concerts From <em> Live-Sense</em></strong></h2></div>
                             <table class="table">
-                            <!-- php loop to show all plan to concert -->
+                            <!-- php loop -->
                                <?php
                                     foreach ($plan_to as $con) {
                                         echo "<th>";
